@@ -1,144 +1,58 @@
 {
- "updated": "2026-11-01T15:00:00+05:30",
+ "updated": "2026-11-02T17:27:38+05:30",
  "source": "ipowatch.in",
  "ipos": [
   {
-   "id": "bombay-coated-and-special-steels",
-   "name": "Bombay Coated and Special Steels",
+   "id": "jio-platforms",
+   "name": "Jio Platforms",
    "seg": "Mainboard",
-   "open": "2026-10-29",
-   "close": "2026-11-02",
-   "band": "₹78–82",
-   "hi": 82,
-   "size": 183.06,
-   "gmp": 7,
-   "h": [
-    [
-     "2026-10-23",
-     5
-    ],
-    [
-     "2026-10-24",
-     8
-    ],
-    [
-     "2026-10-26",
-     8
-    ],
-    [
-     "2026-10-27",
-     9
-    ],
-    [
-     "2026-10-28",
-     9
-    ],
-    [
-     "2026-10-29",
-     9
-    ],
-    [
-     "2026-10-30",
-     9
-    ],
-    [
-     "2026-10-31",
-     7
-    ]
-   ],
+   "open": "2026-10-21",
+   "close": "2026-10-23",
+   "band": "₹1,065–1,119",
+   "hi": 1119,
+   "size": 30187.7,
+   "gmp": null,
+   "h": [],
    "extra": null
   },
   {
-   "id": "m-k-sons-fine-jewels",
-   "name": "M.K.Sons Fine Jewels",
+   "id": "paras-healthcare",
+   "name": "Paras Healthcare",
    "seg": "Mainboard",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹153–162",
-   "hi": 162,
-   "size": 275.4,
-   "gmp": 6,
-   "h": [
-    [
-     "2026-10-25",
-     8
-    ],
-    [
-     "2026-10-26",
-     8
-    ],
-    [
-     "2026-10-27",
-     8
-    ],
-    [
-     "2026-10-28",
-     10
-    ],
-    [
-     "2026-10-29",
-     15
-    ],
-    [
-     "2026-10-30",
-     12
-    ],
-    [
-     "2026-10-31",
-     6
-    ]
-   ],
-   "extra": "Fresh issue ₹220.32 Cr plus an offer for sale of 34,00,000 shares. Face value ₹10. Listing on BSE and NSE."
+   "open": "2026-10-21",
+   "close": "2026-10-23",
+   "band": "₹660–693",
+   "hi": 693,
+   "size": 1450,
+   "gmp": null,
+   "h": [],
+   "extra": null
   },
   {
-   "id": "sfc-environmental-technologies",
-   "name": "SFC Environmental Technologies",
+   "id": "core4-engineers",
+   "name": "Core4 Engineers",
+   "seg": "SME",
+   "open": "2026-10-23",
+   "close": "2026-10-27",
+   "band": "₹88–93",
+   "hi": 93,
+   "size": 54.82,
+   "gmp": 0,
+   "h": [],
+   "extra": null
+  },
+  {
+   "id": "eaaa-india-alternatives",
+   "name": "EAAA India Alternatives",
    "seg": "Mainboard",
-   "open": "2026-10-27",
-   "close": "2026-10-29",
-   "band": "₹313–330",
-   "hi": 330,
-   "size": 668,
-   "gmp": 20,
-   "h": [
-    [
-     "2026-10-22",
-     20
-    ],
-    [
-     "2026-10-23",
-     21
-    ],
-    [
-     "2026-10-24",
-     21
-    ],
-    [
-     "2026-10-25",
-     30
-    ],
-    [
-     "2026-10-26",
-     32
-    ],
-    [
-     "2026-10-27",
-     22
-    ],
-    [
-     "2026-10-28",
-     18
-    ],
-    [
-     "2026-10-29",
-     12
-    ],
-    [
-     "2026-10-30",
-     20
-    ]
-   ],
-   "extra": "Fresh issue about ₹150 Cr; the rest is an offer for sale of 1,56,82,750 shares. Face value ₹2. BSE and NSE."
+   "open": "2026-10-26",
+   "close": "2026-10-28",
+   "band": "₹1,585–1,665",
+   "hi": 1665,
+   "size": 1200,
+   "gmp": 52,
+   "h": [],
+   "extra": null
   },
   {
    "id": "bls-polymers",
@@ -203,41 +117,223 @@
    "extra": null
   },
   {
-   "id": "eaaa-india-alternatives",
-   "name": "EAAA India Alternatives",
+   "id": "sfc-environmental-technologies",
+   "name": "SFC Environmental Technologies",
    "seg": "Mainboard",
-   "open": "2026-10-26",
-   "close": "2026-10-28",
-   "band": "₹1,585–1,665",
-   "hi": 1665,
-   "size": 1200,
-   "gmp": 52,
+   "open": "2026-10-27",
+   "close": "2026-10-29",
+   "band": "₹313–330",
+   "hi": 330,
+   "size": 668,
+   "gmp": 20,
+   "h": [
+    [
+     "2026-10-22",
+     20
+    ],
+    [
+     "2026-10-23",
+     21
+    ],
+    [
+     "2026-10-24",
+     21
+    ],
+    [
+     "2026-10-25",
+     30
+    ],
+    [
+     "2026-10-26",
+     32
+    ],
+    [
+     "2026-10-27",
+     22
+    ],
+    [
+     "2026-10-28",
+     18
+    ],
+    [
+     "2026-10-29",
+     12
+    ],
+    [
+     "2026-10-30",
+     20
+    ]
+   ],
+   "extra": "Fresh issue about ₹150 Cr; the rest is an offer for sale of 1,56,82,750 shares. Face value ₹2. BSE and NSE."
+  },
+  {
+   "id": "wiscon-industries",
+   "name": "Wiscon Industries",
+   "seg": "SME",
+   "open": "2026-10-27",
+   "close": "2026-10-29",
+   "band": "₹194–204",
+   "hi": 204,
+   "size": 110,
+   "gmp": 0,
    "h": [],
    "extra": null
   },
   {
-   "id": "jio-platforms",
-   "name": "Jio Platforms",
-   "seg": "Mainboard",
-   "open": "2026-10-21",
-   "close": "2026-10-23",
-   "band": "₹1,065–1,119",
-   "hi": 1119,
-   "size": 30187.7,
-   "gmp": null,
+   "id": "ajwa-projects",
+   "name": "Ajwa Projects",
+   "seg": "SME",
+   "open": "2026-10-28",
+   "close": "2026-10-30",
+   "band": "₹203",
+   "hi": 203,
+   "size": null,
+   "gmp": 5,
    "h": [],
    "extra": null
   },
   {
-   "id": "paras-healthcare",
-   "name": "Paras Healthcare",
+   "id": "carver-roboweld",
+   "name": "Carver Roboweld",
+   "seg": "SME",
+   "open": "2026-10-28",
+   "close": "2026-10-30",
+   "band": "₹76–80",
+   "hi": 80,
+   "size": null,
+   "gmp": 5,
+   "h": [],
+   "extra": null
+  },
+  {
+   "id": "m-k-sons-fine-jewels",
+   "name": "M.K.Sons Fine Jewels",
    "seg": "Mainboard",
-   "open": "2026-10-21",
-   "close": "2026-10-23",
-   "band": "₹660–693",
-   "hi": 693,
-   "size": 1450,
-   "gmp": null,
+   "open": "2026-10-28",
+   "close": "2026-10-30",
+   "band": "₹153–162",
+   "hi": 162,
+   "size": 275.4,
+   "gmp": 6,
+   "h": [
+    [
+     "2026-10-25",
+     8
+    ],
+    [
+     "2026-10-26",
+     8
+    ],
+    [
+     "2026-10-27",
+     8
+    ],
+    [
+     "2026-10-28",
+     10
+    ],
+    [
+     "2026-10-29",
+     15
+    ],
+    [
+     "2026-10-30",
+     12
+    ],
+    [
+     "2026-10-31",
+     6
+    ]
+   ],
+   "extra": "Fresh issue ₹220.32 Cr plus an offer for sale of 34,00,000 shares. Face value ₹10. Listing on BSE and NSE."
+  },
+  {
+   "id": "antala-industries",
+   "name": "Antala Industries",
+   "seg": "BSE SME",
+   "open": "2026-10-29",
+   "close": "2026-11-02",
+   "band": "₹63–67",
+   "hi": 67,
+   "size": 23.33,
+   "gmp": 0,
+   "h": [],
+   "extra": null
+  },
+  {
+   "id": "bombay-coated-and-special-steels",
+   "name": "Bombay Coated and Special Steels",
+   "seg": "Mainboard",
+   "open": "2026-10-29",
+   "close": "2026-11-02",
+   "band": "₹78–82",
+   "hi": 82,
+   "size": 183.06,
+   "gmp": 7,
+   "h": [
+    [
+     "2026-10-23",
+     5
+    ],
+    [
+     "2026-10-24",
+     8
+    ],
+    [
+     "2026-10-26",
+     8
+    ],
+    [
+     "2026-10-27",
+     9
+    ],
+    [
+     "2026-10-28",
+     9
+    ],
+    [
+     "2026-10-29",
+     9
+    ],
+    [
+     "2026-10-30",
+     9
+    ],
+    [
+     "2026-10-31",
+     7
+    ]
+   ],
+   "extra": null
+  },
+  {
+   "id": "hgs-india",
+   "name": "HGS (India)",
+   "seg": "NSE SME",
+   "open": "2026-10-30",
+   "close": "2026-11-03",
+   "band": "₹114–120",
+   "hi": 120,
+   "size": 34.56,
+   "gmp": 30,
+   "h": [
+    [
+     "2026-10-31",
+     30
+    ]
+   ],
+   "extra": "Geophones and seismic equipment. Fresh issue ₹27.91 Cr plus an offer for sale of 5,54,000 shares."
+  },
+  {
+   "id": "johnsoncab-electricals",
+   "name": "Johnsoncab Electricals",
+   "seg": "BSE SME",
+   "open": "2026-10-30",
+   "close": "2026-11-03",
+   "band": "₹190–200",
+   "hi": 200,
+   "size": 56.02,
+   "gmp": 10,
    "h": [],
    "extra": null
   },
@@ -272,37 +368,6 @@
    "extra": "Makes underwater pelletizing system components. Based in Vadodara."
   },
   {
-   "id": "hgs-india",
-   "name": "HGS (India)",
-   "seg": "NSE SME",
-   "open": "2026-10-30",
-   "close": "2026-11-03",
-   "band": "₹114–120",
-   "hi": 120,
-   "size": 34.56,
-   "gmp": 30,
-   "h": [
-    [
-     "2026-10-31",
-     30
-    ]
-   ],
-   "extra": "Geophones and seismic equipment. Fresh issue ₹27.91 Cr plus an offer for sale of 5,54,000 shares."
-  },
-  {
-   "id": "johnsoncab-electricals",
-   "name": "Johnsoncab Electricals",
-   "seg": "BSE SME",
-   "open": "2026-10-30",
-   "close": "2026-11-03",
-   "band": "₹190–200",
-   "hi": 200,
-   "size": 56.02,
-   "gmp": 10,
-   "h": [],
-   "extra": null
-  },
-  {
    "id": "vectras-enprocon",
    "name": "Vectras Enprocon",
    "seg": "BSE SME",
@@ -316,19 +381,6 @@
    "extra": null
   },
   {
-   "id": "antala-industries",
-   "name": "Antala Industries",
-   "seg": "BSE SME",
-   "open": "2026-10-29",
-   "close": "2026-11-02",
-   "band": "₹63–67",
-   "hi": 67,
-   "size": 23.33,
-   "gmp": 0,
-   "h": [],
-   "extra": null
-  },
-  {
    "id": "vedant-poly-fabs",
    "name": "Vedant Poly Fabs",
    "seg": "NSE SME",
@@ -337,58 +389,6 @@
    "band": "₹88–94",
    "hi": 94,
    "size": 56.68,
-   "gmp": 0,
-   "h": [],
-   "extra": null
-  },
-  {
-   "id": "ajwa-projects",
-   "name": "Ajwa Projects",
-   "seg": "SME",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹203",
-   "hi": 203,
-   "size": null,
-   "gmp": 5,
-   "h": [],
-   "extra": null
-  },
-  {
-   "id": "carver-roboweld",
-   "name": "Carver Roboweld",
-   "seg": "SME",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹76–80",
-   "hi": 80,
-   "size": null,
-   "gmp": 5,
-   "h": [],
-   "extra": null
-  },
-  {
-   "id": "wiscon-industries",
-   "name": "Wiscon Industries",
-   "seg": "SME",
-   "open": "2026-10-27",
-   "close": "2026-10-29",
-   "band": "₹194–204",
-   "hi": 204,
-   "size": 110,
-   "gmp": 0,
-   "h": [],
-   "extra": null
-  },
-  {
-   "id": "core4-engineers",
-   "name": "Core4 Engineers",
-   "seg": "SME",
-   "open": "2026-10-23",
-   "close": "2026-10-27",
-   "band": "₹88–93",
-   "hi": 93,
-   "size": 54.82,
    "gmp": 0,
    "h": [],
    "extra": null
