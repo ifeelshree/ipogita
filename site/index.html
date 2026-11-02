@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>IPOgita</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky filter bar over a single ranked list of IPO rows; each row expands into its GMP trend + reading. News and checklist sit in a side column on wide screens. */
+:root{
+  --bg:#f5f4f1; --surface:#ffffff; --ink:#1b1a22; --ink2:#55535f; --ink3:#85838f; --line:#e3e1dc;
+  --accent:#b4530a; --accent-soft:#fbeede; --up:#0f7a4d; --up-soft:#e2f3ea; --down:#b42318; --down-soft:#fbe9e7; --flat:#6b6978; --flat-soft:#ececf0; --warn:#8a5a00; --warn-soft:#fdf1d3;
+  --spark:#3b3a8f;
+  --f-display:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif; --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14131a; --surface:#1d1c25; --ink:#efeef3; --ink2:#b3b1bd; --ink3:#8b8996; --line:#2f2d3a;
+  --accent:#f0a05a; --accent-soft:#33271b; --up:#4fcf94; --up-soft:#17302a; --down:#ff8a7d; --down-soft:#3a1f1d; --flat:#a3a1b0; --flat-soft:#2a2934; --warn:#f2c15c; --warn-soft:#352b12; --spark:#9a98ff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14131a; --surface:#1d1c25; --ink:#efeef3; --ink2:#b3b1bd; --ink3:#8b8996; --line:#2f2d3a;
+  --accent:#f0a05a; --accent-soft:#33271b; --up:#4fcf94; --up-soft:#17302a; --down:#ff8a7d; --down-soft:#3a1f1d; --flat:#a3a1b0; --flat-soft:#2a2934; --warn:#f2c15c; --warn-soft:#352b12; --spark:#9a98ff; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:1120px;margin:0 auto}
+a{color:var(--accent)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header.top{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font:700 clamp(34px,6vw,52px)/1 var(--f-display);letter-spacing:-.02em;margin:0}
+h1 span{color:var(--accent)}
+.tag{color:var(--ink2);margin:6px 0 0;max-width:46ch}
+.asof{font:12px/1.4 var(--f-mono);color:var(--ink2);text-align:right}
+.asof b{display:block;color:var(--ink);font-size:13px}
+.theme{margin-top:6px;background:none;border:1px solid var(--line);color:var(--ink2);border-radius:6px;padding:4px 10px;font:12px var(--f-body);cursor:pointer}
+.banner{margin:16px 0;padding:10px 14px;background:var(--warn-soft);color:var(--ink);border-radius:6px;font-size:13px}
+.banner b{color:var(--warn)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0 20px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.stat small{display:block;color:var(--ink3);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.stat strong{font:500 22px var(--f-mono);display:block;margin-top:2px}
+.stat span{font-size:12px;color:var(--ink2)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line)}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;color:var(--ink2);padding:7px 12px;font:500 13px var(--f-body);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+select,input[type=search]{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font:13px var(--f-body);min-width:0}
+input[type=search]{flex:1 1 140px}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;margin-top:16px}
+@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}}
+.hd{display:grid;grid-template-columns:minmax(0,1.6fr) .9fr .8fr .8fr 90px;gap:10px;padding:6px 14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
+.row summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1.6fr) .9fr .8fr .8fr 90px;gap:10px;align-items:center;padding:12px 14px}
+.row summary::-webkit-details-marker{display:none}
+.row[open]{border-color:var(--ink3)}
+.nm{font:700 16px/1.2 var(--f-display);overflow-wrap:anywhere}
+.sub{font-size:12px;color:var(--ink2);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;background:var(--flat-soft);color:var(--ink2)}
+.chip.open{background:var(--up-soft);color:var(--up)} .chip.upcoming{background:var(--accent-soft);color:var(--accent)}
+.pill{display:inline-flex;gap:4px;align-items:center;font:500 13px var(--f-mono);padding:2px 8px;border-radius:99px}
+.pill.up{background:var(--up-soft);color:var(--up)} .pill.down{background:var(--down-soft);color:var(--down)} .pill.flat{background:var(--flat-soft);color:var(--flat)}
+.cell small{display:block;color:var(--ink3);font-size:11px}
+.cell{font-size:13px}
+.lbl{display:none}
+@media(max-width:700px){.hd{display:none}.row summary{grid-template-columns:1fr 1fr}.row summary>.first{grid-column:1/-1}.lbl{display:block;color:var(--ink3);font-size:11px}}
+.detail{border-top:1px solid var(--line);padding:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media(max-width:700px){.detail{grid-template-columns:minmax(0,1fr)}}
+.detail h4{margin:0 0 8px;font:700 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px}
+dt{color:var(--ink3)} dd{margin:0;text-align:right}
+.spark{width:100%;height:auto;display:block}
+.spark text{font:10px var(--f-mono);fill:var(--ink3)}
+.tw{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;font:12px var(--f-mono);width:100%}
+th,td{padding:3px 8px;text-align:right;border-bottom:1px solid var(--line)} th:first-child,td:first-child{text-align:left}
+th{color:var(--ink3);font-weight:400}
+.read{grid-column:1/-1;background:var(--bg);border-radius:6px;padding:10px 12px;font-size:13px}
+.read b{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
+.nohist{color:var(--ink3);font-size:13px;padding:14px 0}
+aside h2,.sec h2{font:700 18px var(--f-display);margin:0 0 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:16px}
+.card ul{margin:0;padding-left:18px;font-size:13px;display:grid;gap:8px}
+.card li span{color:var(--ink3);font:11px var(--f-mono);display:block}
+.card ol{margin:0;padding-left:18px;font-size:13px;display:grid;gap:6px}
+.links{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px}
+.empty{padding:24px;text-align:center;color:var(--ink2);border:1px dashed var(--line);border-radius:6px}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--ink2);display:grid;gap:6px}
+@media(prefers-reduced-motion:no-preference){.row{transition:border-color .15s}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <h1>IPO<span>gita</span></h1>
+    <p class="tag">Every live and upcoming IPO in one place: dates, grey market premium, how the premium has moved, and what to check before you apply.</p>
+  </div>
+  <div class="asof" id="asof"><b>Loading latest data...</b></div>
+</header>
+
+<div class="banner"><b>Read this first.</b> GMP is an unofficial, unregulated number quoted by grey market dealers. It can fall to zero or vanish before listing. Estimated listing price here = upper price band + GMP. Nothing on this page is investment advice.</div>
+
+<div class="banner" id="stale" hidden><b>Data may be out of date.</b> The last automatic update was more than 3 hours ago. Check the source links for current figures.</div>
+<div class="banner" id="err" hidden><b>Could not load data.</b> Refresh the page in a moment.</div>
+
+<section class="stats" id="stats" aria-label="Summary"></section>
+
+<div class="bar" role="toolbar" aria-label="Filters">
+  <div class="seg" id="fStatus" aria-label="Status"></div>
+  <div class="seg" id="fSeg" aria-label="Segment"></div>
+  <select id="sort" aria-label="Sort by">
+    <option value="gmpPct">Sort: GMP %</option>
+    <option value="close">Sort: closing date</option>
+    <option value="size">Sort: issue size</option>
+  </select>
+  <input type="search" id="q" placeholder="Search company" aria-label="Search company">
+</div>
+
+<div class="layout">
+  <main>
+    <div class="hd" aria-hidden="true"><span>IPO</span><span>Dates</span><span>Price band</span><span>GMP</span><span>Trend</span></div>
+    <div id="list"></div>
+  </main>
+  <aside>
+    <div class="card">
+      <h2>News to read before applying</h2>
+      <ul id="news"></ul>
+      <p style="margin:12px 0 0" class="links"><a href="https://ipowatch.in/ipo-news/" target="_blank" rel="noopener">All IPO news</a></p>
+    </div>
+    <div class="card">
+      <h2>Before you apply</h2>
+      <ol>
+        <li>Check if the issue is mostly fresh capital or an offer for sale (promoters selling).</li>
+        <li>Look at subscription by category on the last day, not on day one.</li>
+        <li>Read the GMP trend, not one day's number. A falling premium into close is a warning.</li>
+        <li>SME issues: small lots, thin trading, wide swings. Size your bet accordingly.</li>
+        <li>Read the RHP for the use of proceeds, debt and promoter holding.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Live pages at the source</h2>
+      <p class="links">
+        <a href="https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/" target="_blank" rel="noopener">Latest GMP</a>
+        <a href="https://ipowatch.in/upcoming-ipo-list/" target="_blank" rel="noopener">Upcoming IPO list</a>
+        <a href="https://ipowatch.in/ipo-subscription-status-today/" target="_blank" rel="noopener">Subscription status</a>
+        <a href="https://ipowatch.in/author/dilipdavda/" target="_blank" rel="noopener">Dilip Davda reviews</a>
+      </p>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div>Data: ipowatch.in, collected automatically about every 30 minutes. If ipowatch changes its layout, updates can pause until the collector is fixed; the "Updated" time at the top shows how fresh the page is.</div>
+  <div>The "Reading of the numbers" is generated by rules from the GMP figures shown (peak, change, size). It is not a recommendation. IPOs can be oversubscribed, allotment is by lottery in many categories, and listing can be below issue price.</div>
+  <div>Trend charts need two or more readings. History for each IPO builds up as updates are collected; days before collection began may be missing.</div>
+</footer>
+</div>
+
+<script>
+var D=[],NEWS=[],META={};
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fd(iso){var p=iso.split("-");return +p[2]+" "+MON[+p[1]-1]}
+function todayIST(){return new Date(Date.now()+330*60000).toISOString().slice(0,10)}
+function autoRead(d){
+  if(d.gmp==null)return "GMP is not available for this issue right now.";
+  if(d.gmp===0&&d.h.length<2)return "GMP is zero, so the grey market is not pricing in a listing gain.";
+  var s=[],pc=d.pct.toFixed(1)+"% over the upper band";
+  var t=trendOf(d);
+  if(!t){s.push("Premium is \u20b9"+d.gmp+" ("+pc+"). Only one reading so far, so there is no trend yet.")}
+  else{
+    var vs=d.h.map(function(x){return x[1]}),pk=Math.max.apply(null,vs);
+    s.push("Premium moved from \u20b9"+t.from+" to \u20b9"+t.to+" over "+d.h.length+" readings ("+pc+").");
+    if(pk>t.to&&pk>0)s.push("It peaked at \u20b9"+pk+" and has fallen "+Math.round((pk-t.to)/pk*100)+"% from that high.");
+    else if(t.to>=pk&&t.to>t.from)s.push("It is at its highest reading.");
+    if(d.gmp===0)s.push("A zero premium means no listing gain is priced in.");
+  }
+  if(d.size&&d.size<150)s.push("Small SME-size issue; premiums on these can swing sharply.");
+  return s.join(" ");
+}
+function shape(r){
+  var t=todayIST();
+  var d={id:r.id,n:r.name,seg:r.seg,st:t<r.open?"upcoming":t>r.close?"closed":"open",o:fd(r.open),c:fd(r.close),ck:+r.close.replace(/-/g,""),band:r.band,hi:r.hi,size:r.size,gmp:r.gmp,extra:r.extra,
+    h:(r.h||[]).map(function(p){return [fd(p[0]),p[1]]})};
+  d.pct=(d.gmp==null||!d.hi)?null:d.gmp/d.hi*100;
+  d.group=d.seg==="Mainboard"?"Mainboard":"SME";
+  d.read=autoRead(d);
+  return d;
+}
+var S={st:"live",sg:"All"};
+function $(i){return document.getElementById(i)}
+function fmt(n){return n>=1000?n.toLocaleString("en-IN",{maximumFractionDigits:2}):String(+n.toFixed(2))}
+function sz(n){return n==null?"n/a":"₹"+fmt(n)+" Cr"}
+function trendOf(d){
+  if(d.h.length<2)return null;
+  var f=d.h[0][1],l=d.h[d.h.length-1][1],p=d.h[d.h.length-2][1];
+  return {from:f,to:l,last:l-p,all:l-f};
+}
+function pill(d){
+  if(d.gmp==null)return '<span class="pill flat">n/a</span>';
+  var cls=d.gmp>0?"up":"flat";
+  var t=trendOf(d);
+  var arrow="";
+  if(t){arrow=t.last>0?" ▲":t.last<0?" ▼":" ▬";if(t.last<0)cls="down"}
+  return '<span class="pill '+cls+'">₹'+d.gmp+arrow+'</span>';
+}
+function spark(d){
+  var h=d.h;if(h.length<2)return "";
+  var W=300,H=110,L=26,R=10,T=14,B=22;
+  var vs=h.map(function(x){return x[1]});var mx=Math.max.apply(null,vs),mn=Math.min.apply(null,vs.concat([0]));
+  var top=Math.ceil(mx/10)*10||10;
+  var x=function(i){return L+(W-L-R)*i/(h.length-1)};
+  var y=function(v){return T+(H-T-B)*(1-(v-mn)/(top-mn))};
+  var pts=h.map(function(p,i){return x(i).toFixed(1)+","+y(p[1]).toFixed(1)}).join(" ");
+  var area=L+","+y(mn).toFixed(1)+" "+pts+" "+x(h.length-1).toFixed(1)+","+y(mn).toFixed(1);
+  var s='<svg class="spark" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="GMP trend for '+d.n+', from ₹'+vs[0]+' to ₹'+vs[vs.length-1]+'">';
+  [mn,top].forEach(function(v){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--line)"/><text x="'+(L-4)+'" y="'+(y(v)+3)+'" text-anchor="end">'+v+'</text>'});
+  s+='<polygon points="'+area+'" fill="var(--spark)" opacity=".12"/><polyline points="'+pts+'" fill="none" stroke="var(--spark)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  h.forEach(function(p,i){s+='<circle cx="'+x(i)+'" cy="'+y(p[1])+'" r="'+(i===h.length-1?4:2.5)+'" fill="'+(i===h.length-1?"var(--spark)":"var(--surface)")+'" stroke="var(--spark)" stroke-width="1.5"><title>'+p[0]+': ₹'+p[1]+'</title></circle>'});
+  s+='<text x="'+L+'" y="'+(H-6)+'">'+h[0][0]+'</text><text x="'+(W-R)+'" y="'+(H-6)+'" text-anchor="end">'+h[h.length-1][0]+'</text></svg>';
+  return s;
+}
+function mini(d){
+  var h=d.h;if(h.length<2)return '<span class="num" style="color:var(--ink3);font-size:11px">1 reading</span>';
+  var vs=h.map(function(x){return x[1]}),mx=Math.max.apply(null,vs),mn=Math.min.apply(null,vs),r=(mx-mn)||1;
+  var pts=vs.map(function(v,i){return (i*60/(vs.length-1)).toFixed(1)+","+(18-(v-mn)/r*16).toFixed(1)}).join(" ");
+  return '<svg viewBox="0 0 60 20" width="72" height="24" aria-hidden="true"><polyline points="'+pts+'" fill="none" stroke="var(--spark)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
+function row(d){
+  var chipSt='<span class="chip '+d.st+'">'+(d.st==="open"?"Open":d.st==="upcoming"?"Upcoming":"Closed")+'</span>';
+  var pct=d.pct==null?"":'<small class="num">'+d.pct.toFixed(1)+'% · est. ₹'+fmt(d.hi+d.gmp)+'</small>';
+  var t=trendOf(d);
+  var det='<dl><dt>Issue size</dt><dd class="num">'+sz(d.size)+'</dd><dt>Price band</dt><dd class="num">'+d.band+'</dd><dt>Dates</dt><dd class="num">'+d.o+' – '+d.c+'</dd><dt>Segment</dt><dd>'+d.seg+'</dd>'+
+    (d.gmp!=null?'<dt>Current GMP</dt><dd class="num">₹'+d.gmp+' ('+d.pct.toFixed(2)+'%)</dd><dt>Est. listing</dt><dd class="num">₹'+fmt(d.hi+d.gmp)+'</dd>':'')+
+    (t?'<dt>Change, first to last</dt><dd class="num">'+(t.all>=0?"+":"")+t.all+'</dd>':'')+'</dl>'+(d.extra?'<p style="font-size:12px;color:var(--ink2);margin:10px 0 0">'+d.extra+'</p>':'');
+  var tr;
+  if(d.h.length>=2){
+    tr='<h4>GMP trend (₹)</h4>'+spark(d)+'<div class="tw"><table><thead><tr><th>Date</th><th>GMP</th><th>% of upper band</th></tr></thead><tbody>'+
+      d.h.slice().reverse().map(function(p){return '<tr><td>'+p[0]+'</td><td>₹'+p[1]+'</td><td>'+(p[1]/d.hi*100).toFixed(1)+'%</td></tr>'}).join("")+'</tbody></table></div>';
+  } else tr='<h4>GMP trend</h4><div class="nohist">'+(d.h.length?'Only one reading captured ('+d.h[0][0]+': ₹'+d.h[0][1]+').':'No day-wise history captured in this snapshot. See the source link for the full table.')+'</div>';
+  return '<details class="row" data-id="'+d.id+'"><summary><div class="first"><div class="nm">'+d.n+'</div><div class="sub">'+chipSt+'<span>'+d.seg+'</span><span>'+sz(d.size)+'</span></div></div>'+
+    '<div class="cell"><span class="lbl">Dates</span><span class="num">'+d.o+' – '+d.c+'</span></div>'+
+    '<div class="cell"><span class="lbl">Price band</span><span class="num">'+d.band+'</span></div>'+
+    '<div class="cell"><span class="lbl">GMP</span>'+pill(d)+pct+'</div>'+
+    '<div class="cell">'+mini(d)+'</div></summary>'+
+    '<div class="detail"><div>'+det+'</div><div>'+tr+'</div><div class="read"><b>Reading of the numbers</b>'+d.read+'</div></div></details>';
+}
+function render(){
+  var q=$("q").value.trim().toLowerCase(),sortBy=$("sort").value;
+  var L=D.filter(function(d){
+    if(S.st==="live"&&d.st==="closed")return false;
+    if(S.st==="closed"&&d.st!=="closed")return false;
+    if(S.sg!=="All"&&d.group!==S.sg)return false;
+    if(q&&d.n.toLowerCase().indexOf(q)<0)return false;
+    return true;});
+  L.sort(function(a,b){
+    if(sortBy==="close")return (S.st==="closed"?b.ck-a.ck:a.ck-b.ck);
+    if(sortBy==="size")return (b.size||-1)-(a.size||-1);
+    return (b.pct==null?-1e9:b.pct)-(a.pct==null?-1e9:a.pct);});
+  $("list").innerHTML=L.length?L.map(row).join(""):'<div class="empty">No IPOs match these filters.</div>';
+}
+function seg(id,opts,key){
+  var el=$(id);
+  el.innerHTML=opts.map(function(o){return '<button type="button" data-v="'+o[0]+'" aria-pressed="'+(S[key]===o[0])+'">'+o[1]+'</button>'}).join("");
+  el.onclick=function(e){var b=e.target.closest("button");if(!b)return;S[key]=b.dataset.v;seg(id,opts,key);render();};
+}
+function stats(){
+  var live=D.filter(function(d){return d.st!=="closed"});
+  var withG=live.filter(function(d){return d.pct!=null});
+  var best=withG.slice().sort(function(a,b){return b.pct-a.pct})[0];
+  var zero=live.filter(function(d){return d.gmp===0}).length;
+  var open=live.filter(function(d){return d.st==="open"}).length;
+  var nx=live.filter(function(d){return d.st==="open"}).sort(function(a,b){return a.ck-b.ck});
+  var nk=nx.length?nx[0].ck:0,nn=nx.filter(function(d){return d.ck===nk});
+  $("stats").innerHTML=
+   '<div class="stat"><small>Open or upcoming</small><strong>'+live.length+'</strong><span>'+open+' open, '+(live.length-open)+' opening soon</span></div>'+
+   '<div class="stat"><small>Highest GMP, live</small><strong>'+(best?best.pct.toFixed(1)+"%":"n/a")+'</strong><span>'+(best?best.n:"")+'</span></div>'+
+   '<div class="stat"><small>Live IPOs at zero GMP</small><strong>'+zero+'</strong><span>of '+live.length+' open or upcoming</span></div>'+
+   '<div class="stat"><small>Closing next</small><strong>'+(nn.length?nn[0].c:"n/a")+'</strong><span>'+nn.map(function(d){return d.n}).join(", ")+'</span></div>';
+}
+function news(){
+  $("news").innerHTML=NEWS.length?NEWS.map(function(n){return '<li>'+(n.u?'<a href="'+n.u+'" target="_blank" rel="noopener">'+n.t+'</a>':n.t)+'<span>'+(n.d?fd(n.d)+' \u00b7 ':'')+'ipowatch.in</span></li>'}).join(""):'<li>No headlines in the latest update.</li>';
+}
+function stamp(){
+  var u=new Date(META.updated),mins=Math.round((Date.now()-u)/60000);
+  var ago=mins<1?"just now":mins<60?mins+" min ago":mins<1440?Math.round(mins/60)+" h ago":Math.round(mins/1440)+" d ago";
+  var ist=new Date(u.getTime()+330*60000).toISOString();
+  $("asof").innerHTML='<b>Updated '+fd(ist.slice(0,10))+', '+ist.slice(11,16)+' IST</b>'+ago+' \u00b7 GMP as published by ipowatch.in<br><button class="theme" id="themeBtn" type="button">Switch theme</button>';
+  $("themeBtn").onclick=toggleTheme;
+  $("stale").hidden=mins<180;
+}
+function toggleTheme(){var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark"}
+function load(){
+  fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    META=j;D=j.ipos.map(shape);NEWS=j.news||[];stamp();stats();news();
+    var open=document.querySelectorAll("details.row[open]"),ids=[];open.forEach(function(e){ids.push(e.dataset.id)});
+    render();ids.forEach(function(id){var e=document.querySelector('details.row[data-id="'+id+'"]');if(e)e.open=true});
+    $("err").hidden=true;
+  }).catch(function(){$("err").hidden=false});
+}
+seg("fStatus",[["live","Open + upcoming"],["closed","Closed"],["all","All"]],"st");
+seg("fSeg",[["All","All"],["Mainboard","Mainboard"],["SME","SME"]],"sg");
+$("sort").onchange=render;$("q").oninput=render;
+load();setInterval(load,600000);
+</script>
+</body>
+</html>
