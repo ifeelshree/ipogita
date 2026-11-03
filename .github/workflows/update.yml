@@ -1,16 +1,16 @@
 name: Update IPO data
 on:
   schedule:
-    - cron: "*/30 * * * *"   # about every 30 minutes
-  workflow_dispatch:          # lets you press "Run workflow" by hand
-permissions:
-  contents: write
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
 concurrency:
   group: ipogita-update
   cancel-in-progress: false
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -24,4 +24,25 @@ jobs:
           git config user.email "ipogita-bot@users.noreply.github.com"
           git add site/data.json
           git diff --cached --quiet || git commit -m "Update IPO data"
+          git pull --rebase origin main
           git push
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: d
+        uses: actions/deploy-pages@v4
