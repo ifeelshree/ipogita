@@ -1,101 +1,7 @@
 {
- "updated": "2026-11-20T22:15:57+05:30",
+ "updated": "2026-11-21T04:24:32+05:30",
  "source": "ipowatch.in",
  "ipos": [
-  {
-   "id": "ajwa-projects",
-   "name": "Ajwa Projects",
-   "seg": "SME",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹203",
-   "hi": 203.0,
-   "size": null,
-   "gmp": 1,
-   "h": [
-    [
-     "2026-11-19",
-     1
-    ],
-    [
-     "2026-11-20",
-     1
-    ]
-   ],
-   "extra": null
-  },
-  {
-   "id": "carver-roboweld",
-   "name": "Carver Roboweld",
-   "seg": "SME",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹80",
-   "hi": 80.0,
-   "size": null,
-   "gmp": 5,
-   "h": [
-    [
-     "2026-11-19",
-     5
-    ],
-    [
-     "2026-11-20",
-     5
-    ]
-   ],
-   "extra": null
-  },
-  {
-   "id": "m-k-sons-fine-jewels",
-   "name": "M.K.Sons Fine Jewels",
-   "seg": "Mainboard",
-   "open": "2026-10-28",
-   "close": "2026-10-30",
-   "band": "₹162",
-   "hi": 162.0,
-   "size": 275.4,
-   "gmp": 10,
-   "h": [
-    [
-     "2026-10-25",
-     8
-    ],
-    [
-     "2026-10-26",
-     8
-    ],
-    [
-     "2026-10-27",
-     8
-    ],
-    [
-     "2026-10-28",
-     10
-    ],
-    [
-     "2026-10-29",
-     15
-    ],
-    [
-     "2026-10-30",
-     12
-    ],
-    [
-     "2026-10-31",
-     6
-    ],
-    [
-     "2026-11-19",
-     10
-    ],
-    [
-     "2026-11-20",
-     10
-    ]
-   ],
-   "extra": "Fresh issue ₹220.32 Cr plus an offer for sale of 34,00,000 shares. Face value ₹10. Listing on BSE and NSE."
-  },
   {
    "id": "antala-industries",
    "name": "Antala Industries",
@@ -113,6 +19,10 @@
     ],
     [
      "2026-11-20",
+     0
+    ],
+    [
+     "2026-11-21",
      0
     ]
    ],
@@ -168,6 +78,10 @@
     [
      "2026-11-20",
      9
+    ],
+    [
+     "2026-11-21",
+     9
     ]
    ],
    "extra": null
@@ -194,6 +108,10 @@
     [
      "2026-11-20",
      28
+    ],
+    [
+     "2026-11-21",
+     28
     ]
    ],
    "extra": "Geophones and seismic equipment. Fresh issue ₹27.91 Cr plus an offer for sale of 5,54,000 shares."
@@ -215,6 +133,10 @@
     ],
     [
      "2026-11-20",
+     8
+    ],
+    [
+     "2026-11-21",
      8
     ]
    ],
@@ -254,6 +176,10 @@
     [
      "2026-11-20",
      105
+    ],
+    [
+     "2026-11-21",
+     105
     ]
    ],
    "extra": "Makes underwater pelletizing system components. Based in Vadodara."
@@ -276,6 +202,10 @@
     [
      "2026-11-20",
      0
+    ],
+    [
+     "2026-11-21",
+     0
     ]
    ],
    "extra": null
@@ -297,6 +227,10 @@
     ],
     [
      "2026-11-20",
+     1
+    ],
+    [
+     "2026-11-21",
      1
     ]
    ],
